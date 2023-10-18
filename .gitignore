@@ -1,0 +1,6 @@
+*.zip
+*.png
+*.npy
+__pycache__
+.idea
+*.docx
