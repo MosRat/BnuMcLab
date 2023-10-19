@@ -1,4 +1,4 @@
-import matplotlib.pyplot as plt
+import pandas as pd
 
 from utils import *
 
@@ -8,7 +8,7 @@ plt.rcParams['savefig.dpi'] = 300  # 图片像素
 plt.rcParams['figure.dpi'] = 300  # 分辨率
 
 
-def plot_single(data):
+def plot_single(data: pd.DataFrame) -> None:
     try:
         a = data['gamma']
         sns.relplot(data=data,
@@ -17,7 +17,7 @@ def plot_single(data):
                     col='gamma',
                     kind='line',
                     style='gamma',
-                    hue='gamma',
+                    hue='type',
                     palette='Pastel1',
                     markers=True,
                     # size='score',
@@ -30,9 +30,13 @@ def plot_single(data):
                     kind='line',
                     palette='Pastel1',
                     markers=True,
+                    hue='type',
                     # size='score',
                     legend='full'
                     )
-    # plt.legend()
 
-    # plt.show()
+
+if __name__ == '__main__':
+    print(sns.load_dataset("flights")
+          .pivot(index="year", columns="month", values="passengers")
+          )
