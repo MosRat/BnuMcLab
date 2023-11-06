@@ -6,7 +6,7 @@ from plot import plot_tree, plot_line, X_train, y_train, X_test, y_test
 # X_train, y_train, X_test, y_test = load_data()
 # 定义决策器模型
 features = get_feature_name()
-ps = [gini_tree(i) for i in range(1, 3)] + [entropy_tree(i) for i in range(1, 3)]
+ps = [gini_tree(i) for i in range(1, 8)] + [entropy_tree(i) for i in range(1, 8)]
 ts = [random_tree(i * 10) for i in range(1, 9)]
 ads = [ada_boost(i * 25) for i in range(1, 9, 2)]
 
@@ -25,8 +25,8 @@ if __name__ == '__main__':
     # 测试决策树
     his = {'gini': [], 'entropy': []}
     with multiprocess_as_completed(6, fit_and_score, ps,
-                                   names=[f'gini_{i}' for i in range(1, 3)] + [f'entropy_{i}' for i in
-                                                                                range(1, 3)], ) as (it, names):
+                                   names=[f'gini_{i}' for i in range(1, 8)] + [f'entropy_{i}' for i in
+                                                                                range(1, 8)], ) as (it, names):
         for i in it:
             p, s = i.result()
             name = names[i]
