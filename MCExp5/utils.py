@@ -18,6 +18,8 @@ from dtreeviz.colors import adjust_colors  # 用于分类树颜色（色盲友�
 from dtreeviz import model
 from matplotlib.colors import Normalize
 from concurrent.futures import ProcessPoolExecutor, as_completed
+from warnings import filterwarnings
+filterwarnings('ignore')
 
 
 @contextlib.contextmanager

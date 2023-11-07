@@ -1,12 +1,12 @@
 from utils import *
-from dataset import load_data, get_feature_name
-from estimator import gini_tree, entropy_tree, random_tree, ada_boost, ada_boost_mlp, ada_boost_sgd, ada_boost_svc
+from dataset import get_feature_name
+from estimator import random_tree, ada_boost, gain_tree, gain_rate_tree
 from plot import plot_tree, plot_line, X_train, y_train, X_test, y_test
 
 # X_train, y_train, X_test, y_test = load_data()
 # 定义决策器模型
 features = get_feature_name()
-ps = [gini_tree(i) for i in range(1, 8)] + [entropy_tree(i) for i in range(1, 8)]
+ps = [gain_tree(i) for i in range(1, 8)] + [gain_rate_tree(i) for i in range(1, 8)]
 ts = [random_tree(i * 10) for i in range(1, 9)]
 ads = [ada_boost(i * 25) for i in range(1, 9, 2)]
 
@@ -23,17 +23,18 @@ def fit_and_score(p: ClassifierMixin) -> Tuple[ClassifierMixin, float]:
 
 if __name__ == '__main__':
     # 测试决策树
-    his = {'gini': [], 'entropy': []}
+    his = {'gain': [], 'gainRate': []}
     with multiprocess_as_completed(6, fit_and_score, ps,
-                                   names=[f'gini_{i}' for i in range(1, 8)] + [f'entropy_{i}' for i in
-                                                                                range(1, 8)], ) as (it, names):
+                                   names=[f'gain_{i}' for i in range(1, 8)] + [f'gainRate_{i}' for i in
+                                                                               range(1, 8)], ) as (it, names):
         for i in it:
             p, s = i.result()
             name = names[i]
             his[name.split('_')[0]].append(s)
             print(f'{name}: {s}')
     # 需要配置graphic才能绘制决策树的图
-    plot_tree(p, 'tree')
+    # plot_tree(p, 'tree')
+    print(p)
     plot_line(his.values(), his.keys(), 'decision_tree', 'max_depth', 'score')
 
     # 测试随机森林
