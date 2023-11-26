@@ -57,6 +57,9 @@ def Gain(name, table):
     D = len(table)
     ent_D = entropy(np.array([sum(table[target] == i) / D for i in vals[target]])).sum()
     ent_DA = ent(name, table, D).sum()
+    print(name,ent_DA)
+
+
     # 以下代码计算A划分数据集D的熵，用来实现C4.5算法
     # ent_A = entropy(np.array([sum(table[name] == i) for i in vals[name]]) / D).sum()
     # print(f"ent_D:{ent_D}")
